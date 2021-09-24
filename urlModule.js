@@ -38,9 +38,9 @@ const urlModule ={
                 // inserts or saves into mongodb
                  newUser.save(function (err, data) {
                     if (err) throw err;
-                    res.redirect(`${CLIENT_URL}`)
+                    // res.redirect(`${CLIENT_URL}`)
                     // res.redirect('http://localhost:3004/drive')
-                    // res.json({msg: "Register Success! Please activate your email to start."})
+                    res.json({msg: "Register Success! Please activate your email to start."})
                     // res.send(newUser)
                 })
                 // console.log(newUser)

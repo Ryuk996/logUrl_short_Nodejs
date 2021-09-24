@@ -40,16 +40,7 @@ mongoose.connect(URL, {
     console.log("Connected to mongodb")
 })
 
-// showUrlid: async (req,res) => {
-//   try {
-//       console.log(req.params.url.urlId)
-//       // let urlData =await Users.findOne({shorturlLink :req.param.urlid} )
-//       // console.log(urlData)
-//       // res.redirect(urlData.urlLink)
-//   } catch (error) {
-//       res.status(500).json({msg:"internal server error"})
-//   }
-// }
+
 
 app.use('http://localhost:3000/login',(req,res,next) => {
     res.json({msg:"hello all"})
