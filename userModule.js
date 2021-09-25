@@ -25,23 +25,17 @@ const userModule ={
                 let salt = bcryptjs.genSaltSync(10);
                 let hash = bcryptjs.hashSync(req.body.password, salt);
                 req.body.password=hash;
-                // console.log(salt)
-                // console.log(hash)   
 
                 const newUser = {
                     firstName, lastName,userName, password: hash
                 }
-
                 const activation_token = createActivationToken(newUser)
                 const url = `${CLIENT_URL}/user/activate/${activation_token}`
+                //=>sending mail with activation_token ->for activating through email verification
                 sendMail(userName, url,"verify your emailID")
 
                 res.json({msg: "Register Success! Please activate your email to start."})
-            //     console.log(activation_token)
-
-            //     console.log(newUser)
-            // console.log(req.body)
-            // res.json({msg:"register test"})
+            
         } catch (error) {
             res.status(500).json({msg:"internal server error"})
         }
@@ -60,7 +54,7 @@ const userModule ={
             const newUser = new Users({
                 firstName, lastName,userName, password
             })
-
+            //=>After activation through email store data in dB ->for storing
             await newUser.save()
 
             res.json({msg: "Account has been activated!"})
@@ -83,7 +77,7 @@ const userModule ={
             res.cookie('refreshtoken', refresh_token, {
                 httpOnly: true,
                 path: '/user/refresh_token',
-                maxAge: 7*24*60*60*1000 // 7 days
+               // maxAge: 7*24*60*60*1000 // 7 days
             })
             // console.log(refresh_token)
             const rf_token = refresh_token
@@ -95,50 +89,22 @@ const userModule ={
                 // console.log(user)
                 const access_token = createAccessToken({id: user.id})
                 // console.log({access_token})
+                //=>fecthing the access token to the clientside ->for authentication
+                res.json({aToken: access_token})
              })
-            // if(matchPassword){
-            //     //Generate JWT token
-            //     const refresh_token = createRefreshToken({id: user._id})
-            //     res.cookie('refreshtoken', refresh_token, {
-            //     httpOnly: true,
-            //     path: '/user/refresh_token',
-            //     maxAge: 7*24*60*60*1000 // 7 days
-            // })
-
-            // res.json({msg: "Login success!"})
-            // }else{
-            //     res.status(404).json({
-            //         message : "Username/Password doesn't match"
-            //     })
-            // }
-            res.json({msg: "Login success!"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
     getAccessToken: async(req, res) => {
         try {
-            // const {userName, password} = req.body
-            // const user = await Users.findOne({userName})
-            // const refresh_token = createRefreshToken({id: user._id})
-            // res.cookie('refreshtoken', refresh_token, {
-            //     httpOnly: true,
-            //     path: '/user/refresh_token',
-            //     maxAge: 7*24*60*60*1000 // 7 days
-            // })
+            
             console.log(refresh_token)
             const rf_token= req.refresh_token
             console.log(rf_token)
             // const rf_token = req.cookies.refreshtoken
             console.log({rf_token})
-            // if(!rf_token) return res.status(400).json({msg: "Please login now!"})
-            // // console.log(rf_token)
-            // jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-            //     if(err) return res.status(400).json({msg: "Please login now!"})
-            //     // console.log(user)
-            //     const access_token = createAccessToken({id: user.id})
-            //     res.json({access_token})
-             //})
+            
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
@@ -203,7 +169,7 @@ const createAccessToken = (payload) => {
 }
 
 const createRefreshToken = (payload) => {
-    return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'})
+    return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET)
 }
 
 module.exports = userModule

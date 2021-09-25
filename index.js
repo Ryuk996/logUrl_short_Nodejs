@@ -6,7 +6,7 @@ const mongodb = require('mongodb');
 const mongoose = require('mongoose')
 
 
-// const bodyParser = require('body-parser')
+
 const PORT = process.env.PORT || 3002;
 
 app.use(cors({
@@ -14,14 +14,8 @@ app.use(cors({
   }))
   //middleware
   app.use(express.json())
-  
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-  With, Content-Type, Accept");
-//   res.header("Access-Control-Allow-Methods","POST,PUT,GET,DELETE")
-//   next();   
-// });
-  // app.use(bodyParser.urlencoded({extended:true}))
+   
+
 
   // Routes
 app.use('/user', require('./Routes/userRoutes'))
@@ -31,8 +25,6 @@ app.use('/url', require('./Routes/urlRoutes'))
   // Connect to mongodb
 const URL = process.env.MongoDb_url
 mongoose.connect(URL, {
-    // useCreateIndex: true,
-    // useFindAndModify: false
     useNewUrlParser: true,
     useUnifiedTopology: true
 }, err => {

@@ -1,10 +1,12 @@
 const express= require('express')
 const router = express();
 
+const urlauth = require('../Authentication/urlauthenticate')
 const urlModule = require('../urlModule')
 
 
-router.post('/createUrl', urlModule.createUrl)
+
+router.post('/createUrl',urlauth, urlModule.createUrl)
 
 router.get('/showUrl', urlModule.showUrl)
 
@@ -14,4 +16,4 @@ router.get('/delete/:id', urlModule.deleteUrlid)
 
 
 
-module.exports= router
+module.exports= router  

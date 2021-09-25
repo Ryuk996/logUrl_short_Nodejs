@@ -20,7 +20,5 @@ const urlSchema = new mongoose.Schema({
     timestamps: true
 })
 
-// const Users = mongoose.model("Users", userSchema, 'accounts');
-// module.exports = Users
 
 module.exports = mongoose.model("Url", urlSchema, 'urllist');
