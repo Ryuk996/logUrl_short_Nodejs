@@ -27,7 +27,7 @@ const urlModule = {
             newUser.save(function (err, data) {
                 if (err) throw err;
 
-                res.json({ msg: "Register Success! Please activate your email to start." })
+                res.json({ msg: "Success! short URL created" })
             })
         } catch (error) {
             res.status(500).json({ msg: "internal server error" })

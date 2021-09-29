@@ -54,5 +54,5 @@ const sendEmail = (to, url, txt) => {
         return infor
     })
 }
-
+ 
 module.exports = sendEmail
